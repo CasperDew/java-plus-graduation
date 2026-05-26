@@ -28,7 +28,7 @@ public class StatsClient {
     private final RestClient restClient;
 
     @Autowired
-    public StatsClient(@Value("${statsServer.url:http://localhost:9090}") String baseUrl) {
+    public StatsClient(@Value("${statsServer.url:http://stats-server}") String baseUrl) {
         this.baseUrl = baseUrl;
         restClient = RestClient.builder()
                 .baseUrl(baseUrl)
