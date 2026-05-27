@@ -17,9 +17,6 @@ spring:
     username: main
     password: main
 
-stats-server:
-  url: http://stats-server
-
 logging:
   level:
     root: INFO

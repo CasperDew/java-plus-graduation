@@ -1,5 +1,6 @@
 package ru.practicum.controller.nonauthorized;
 
+import feign.FeignException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import ru.practicum.StatsClient;
 import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventSearchRequestUser;
 import ru.practicum.dto.EventShortDto;
+import ru.practicum.exception.StatsClientFeignException;
 import ru.practicum.service.EventService;
 
 import java.time.LocalDateTime;
@@ -32,13 +34,22 @@ public class PublicEventController {
     public EventFullDto getEvent(@PathVariable Long id, HttpServletRequest request) {
         log.info("Получение информации о событии");
 
-        NewEndpointHitDto hitDto = new NewEndpointHitDto(APP_NAME, request.getRequestURI(),
-                request.getRemoteAddr(), LocalDateTime.now().format(DATE_TIME_FORMATTER));
+        NewEndpointHitDto hitDto = new NewEndpointHitDto(
+                APP_NAME,
+                request.getRequestURI(),
+                request.getRemoteAddr(),
+                LocalDateTime.now().format(DATE_TIME_FORMATTER)
+        );
 
-        log.info("Отправка запроса в сервис статистики из метода getEvent() с dto={}", hitDto);
-        statsClient.hit(hitDto);
-        log.info("Отправка запроса в сервис статистики из метода getEvent() завершена успешно");
-        return eventService.getPublicEvent(id);
+        try {
+            log.info("Добавление события getEvent в сервис статистики с dto={}", hitDto);
+            statsClient.hit(hitDto);
+            log.info("Добавление события getEvent в сервис статистики завершено успешно");
+            return eventService.getPublicEvent(id);
+        } catch (FeignException e) {
+            log.error("Ошибка feign-клиента сервиса статистики: {}", e.getMessage());
+            throw new StatsClientFeignException(e.getMessage());
+        }
     }
 
     @GetMapping
