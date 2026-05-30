@@ -1,19 +1,4 @@
 services:
-  stats-server:
-    build: stats/stats-server
-    image: stats-server
-    container_name: stats-server
-    ports:
-      - "9090:9090"
-    depends_on:
-      stats-db:
-        condition: service_healthy
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statistics
-      - SPRING_DATASOURCE_USERNAME=stat
-      - SPRING_DATASOURCE_PASSWORD=stat
-
-
   stats-db:
     image: postgres:16.1
     container_name: ewm-stats-db-pg
@@ -31,23 +16,6 @@ services:
       interval: 5s
       retries: 10
 
-
-  ewm-service:
-    build: main-service
-    image: main-service
-    container_name: main-service
-    ports:
-      - "8080:8080"
-    depends_on:
-      ewm-db:
-        condition: service_healthy
-    environment:
-      - STATS_SERVICE_URL=http://stats-server:9090
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/main
-      - SPRING_DATASOURCE_USERNAME=main
-      - SPRING_DATASOURCE_PASSWORD=main
-
-
   ewm-db:
     image: postgres:16.1
     container_name: ewm-main-db-pg
@@ -64,3 +32,51 @@ services:
       timeout: 5s
       interval: 5s
       retries: 10
+
+  discovery-server:
+    build: ./infra/discovery-server
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+
+  config-server:
+    build: ./infra/config-server
+    container_name: config-server
+    depends_on:
+      - discovery-server
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  gateway-server:
+    build: ./infra/gateway-server
+    container_name: gateway-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-server
+      - config-server
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+
+  main-service:
+    build: ./core/main-service
+    depends_on:
+      - discovery-server
+      - config-server
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/main
+      - SPRING_DATASOURCE_USERNAME=main
+      - SPRING_DATASOURCE_PASSWORD=main
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+
+  stats-server:
+    build: ./stats/stats-server
+    depends_on:
+      - discovery-server
+      - config-server
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statistics
+      - SPRING_DATASOURCE_USERNAME=stat
+      - SPRING_DATASOURCE_PASSWORD=stat
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
