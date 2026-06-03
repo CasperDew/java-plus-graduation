@@ -1,14 +1,36 @@
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: false
-      routes:
-        - id: main_service_route
-          uri: lb://main-service
-          predicates:
-            - Path=/**
+      cloud:
+        gateway:
+          discovery:
+            locator:
+              enabled: true
+          routes:
+            - id: user_service_route
+              uri: lb://user-service
+              predicates:
+                - Path=/admin/users/**, /internal/users/**
+
+            - id: comment_service_route
+              uri: lb://comment-service
+              predicates:
+                - Path=/admin/comments/**, /internal/comments/**, /users/*/comments/**
+
+            - id: request_service_route
+              uri: lb://request-service
+              predicates:
+                - Path=/users/*/requests/**, /users/*/events/*/requests/**, /internal/request/**
+
+            - id: category_service_route
+              uri: lb://category-service
+              predicates:
+                - Path=/admin/categories/**, /categories/**, /internal/categories/**
+
+            - id: event_service_route
+              uri: lb://event-service
+              predicates:
+                - Path=/admin/events/**, /internal/events/**, /users/*/events/**, /events/**, /admin/compilations/**, /compilations/**, /internal/compilations/**
 
 server:
   port: 8080

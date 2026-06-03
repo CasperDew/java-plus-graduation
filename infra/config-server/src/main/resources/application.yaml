@@ -8,10 +8,17 @@ spring:
       server:
         native:
           searchLocations:
-            - classpath:config/main-service/
+            - classpath:config/core/category-service/
+            - classpath:config/core/comment-service/
+            - classpath:config/core/request-service/
+            - classpath:config/core/event-service/
+            - classpath:config/core/user-service/
             - classpath:config/stats-server/
             - classpath:config/gateway-server/
-
+        fail-fast: true
+        retry:
+          useRandomPolicy: true
+          max-interval: 6000
 server:
   port: 0
 
