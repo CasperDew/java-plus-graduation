@@ -1,43 +1,57 @@
 spring:
   cloud:
     gateway:
-      cloud:
-        gateway:
-          discovery:
-            locator:
-              enabled: true
-          routes:
-            - id: user_service_route
-              uri: lb://user-service
-              predicates:
-                - Path=/admin/users/**, /internal/users/**
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: user_service_route
+          uri: lb://user-service
+          predicates:
+            - Path=/admin/users/**, /internal/users/**
 
-            - id: comment_service_route
-              uri: lb://comment-service
-              predicates:
-                - Path=/admin/comments/**, /internal/comments/**, /users/*/comments/**
+        - id: comment_service_route
+          uri: lb://comment-service
+          predicates:
+            - Path=/admin/comments/**, /internal/comments/**, /users/*/comments/**
 
-            - id: request_service_route
-              uri: lb://request-service
-              predicates:
-                - Path=/users/*/requests/**, /users/*/events/*/requests/**, /internal/request/**
+        - id: request_service_route
+          uri: lb://request-service
+          predicates:
+            - Path=/users/*/requests/**, /users/*/events/*/requests/**, /internal/request/**
 
-            - id: category_service_route
-              uri: lb://category-service
-              predicates:
-                - Path=/admin/categories/**, /categories/**, /internal/categories/**
+        - id: category_service_route
+          uri: lb://category-service
+          predicates:
+            - Path=/admin/categories/**, /categories/**, /internal/categories/**
 
-            - id: event_service_route
-              uri: lb://event-service
-              predicates:
-                - Path=/admin/events/**, /internal/events/**, /users/*/events/**, /events/**, /admin/compilations/**, /compilations/**, /internal/compilations/**
+        - id: event_service_route
+          uri: lb://event-service
+          predicates:
+            - Path=/admin/events/**, /internal/events/**, /users/*/events/**, /events/**, /admin/compilations/**, /compilations/**, /internal/compilations/**
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
 
 server:
   port: 8080
 
 logging:
   level:
+    reactor:
+      netty: INFO
     org:
       springframework:
         cloud:
-          gateway: DEBUG
+          gateway: INFO
+        http:
+          server:
+            reactive: INFO

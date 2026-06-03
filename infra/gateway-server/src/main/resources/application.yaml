@@ -12,6 +12,20 @@ spring:
       discovery:
         enabled: true
         service-id: config-server
+      uri: ""
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
 
 eureka:
   client:
