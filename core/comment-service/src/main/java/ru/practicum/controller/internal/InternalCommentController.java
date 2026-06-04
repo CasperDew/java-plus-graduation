@@ -3,10 +3,7 @@ package ru.practicum.controller.internal;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.practicum.client.internal.CommentClientInternal;
 import ru.practicum.service.CommentService;
 import ru.practicum.dto.comment.CommentDto;
@@ -26,5 +23,11 @@ public class InternalCommentController implements CommentClientInternal {
     public Map<Long, List<CommentDto>> getEventIdToCommentsDtoMap(@RequestBody Set<Long> eventIds) {
         log.info("Получен запрос на формирование словаря комментариев по событиям" + eventIds);
         return commentService.getEventIdToCommentsDtoMap(eventIds);
+    }
+
+    @Override
+    @GetMapping("/exists")
+    public boolean existsByAuthorIdInternal(@RequestParam Long authorId) {
+        return commentService.existsByAuthorIdInternal(authorId);
     }
 }

@@ -4,14 +4,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.mapper.UserMapper;
-import ru.practicum.model.User;
-import ru.practicum.repository.UserRepository;
+import ru.practicum.client.internal.CommentClientInternal;
+import ru.practicum.client.internal.EventClientInternal;
+import ru.practicum.client.internal.RequestClientInternal;
+import ru.practicum.dto.event.EventInternalDto;
 import ru.practicum.dto.user.NewUserRequest;
 import ru.practicum.dto.user.UserDto;
 import ru.practicum.dto.user.UserShortDto;
+import ru.practicum.exception.ConditionsConflictException;
 import ru.practicum.exception.NotFoundException;
+import ru.practicum.mapper.UserMapper;
 import ru.practicum.model.QUser;
+import ru.practicum.model.User;
+import ru.practicum.repository.UserRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -25,6 +30,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final EventClientInternal eventClient;
+    private final CommentClientInternal commentClient;
+    private final RequestClientInternal requestClient;
 
     @Override
     @Transactional
@@ -52,6 +60,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь с id " + userId + " не найден"));
+        checkConnections(userId);
         userRepository.deleteById(userId);
     }
 
@@ -74,5 +83,23 @@ public class UserServiceImpl implements UserService {
         return users.stream()
                 .map(userMapper::toShortDto)
                 .collect(Collectors.toMap(UserShortDto::getId, Function.identity()));
+    }
+
+    private void checkConnections(Long userId) {
+        EventInternalDto event = eventClient.getExistingEventInternal(null, userId);
+        if (event != null) {
+            throw new ConditionsConflictException("Невозможно удалить пользователя id=" + userId +
+                    ", т.к. есть связанное событие id=" + event.getId());
+        }
+
+        if (commentClient.existsByAuthorIdInternal(userId)) {
+            throw new ConditionsConflictException("Невозможно удалить пользователя id=" + userId +
+                    ", т.к. есть связанные комментарии");
+        }
+
+        if (requestClient.existsByRequesterIdInternal(userId)) {
+            throw new ConditionsConflictException("Невозможно удалить пользователя id=" + userId +
+                    ", т.к. есть связанные запросы на участие");
+        }
     }
 }

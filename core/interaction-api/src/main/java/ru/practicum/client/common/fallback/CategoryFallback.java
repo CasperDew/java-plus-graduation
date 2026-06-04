@@ -1,50 +1,50 @@
-package ru.practicum.common.fallback;
+package ru.practicum.client.common.fallback;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.common.request.RequestClient;
-import ru.practicum.dto.event.EventRequestStatusUpdateRequest;
-import ru.practicum.dto.event.EventRequestStatusUpdateResult;
-import ru.practicum.dto.participation.ParticipationRequestDto;
+import ru.practicum.client.common.categoty.CategoryClientAdmin;
+import ru.practicum.client.common.categoty.CategoryClientNonauthorized;
+import ru.practicum.dto.category.CategoryDto;
+import ru.practicum.dto.category.NewCategoryDto;
 import ru.practicum.exception.FeignClientUnavailableException;
 
 import java.util.List;
 
 @Slf4j
 @Component
-public class ParticipationClientFallback implements RequestClient {
+public class CategoryFallback implements CategoryClientAdmin, CategoryClientNonauthorized {
 
     @Override
-    public ParticipationRequestDto addParticipationRequest(Long userId, Long eventId) {
+    public CategoryDto addCategory(NewCategoryDto newCategoryDto) {
         logError();
         throw new FeignClientUnavailableException("Сервис временно недоступен");
     }
 
     @Override
-    public List<ParticipationRequestDto> getUserRequests(Long userId) {
+    public void delete(Long catId) {
         logError();
         throw new FeignClientUnavailableException("Сервис временно недоступен");
     }
 
     @Override
-    public ParticipationRequestDto cancelRequest(Long userId, Long requestId) {
+    public CategoryDto updateCategory(Long catId, CategoryDto categoryDto) {
         logError();
         throw new FeignClientUnavailableException("Сервис временно недоступен");
     }
 
     @Override
-    public EventRequestStatusUpdateResult changeRequestStatus(Long userId, Long eventId, EventRequestStatusUpdateRequest dto) {
+    public List<CategoryDto> getCategories(Integer from, Integer size) {
         logError();
         throw new FeignClientUnavailableException("Сервис временно недоступен");
     }
 
     @Override
-    public List<ParticipationRequestDto> getEventParticipants(Long userId, Long eventId) {
+    public CategoryDto getCategory(Long catId) {
         logError();
         throw new FeignClientUnavailableException("Сервис временно недоступен");
     }
 
     void logError() {
-        log.error("Fallback response: request service is unavailable");
+        log.error("Fallback response: category service is unavailable");
     }
 }

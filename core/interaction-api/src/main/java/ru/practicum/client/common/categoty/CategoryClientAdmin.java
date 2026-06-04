@@ -1,11 +1,11 @@
-package ru.practicum.common.categoty;
+package ru.practicum.client.common.categoty;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.CategoryFallback;
+import ru.practicum.client.common.fallback.CategoryFallback;
 import ru.practicum.dto.category.CategoryDto;
 import ru.practicum.dto.category.NewCategoryDto;
 

@@ -1,11 +1,11 @@
-package ru.practicum.common.fallback;
+package ru.practicum.client.common.fallback;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.common.event.admin.EventClientAdmin;
-import ru.practicum.common.event.authorized.EventClientAuthorized;
-import ru.practicum.common.nonauthorized.EventClientNonauthorized;
+import ru.practicum.client.common.event.admin.EventClientAdmin;
+import ru.practicum.client.common.event.authorized.EventClientAuthorized;
+import ru.practicum.client.common.nonauthorized.EventClientNonauthorized;
 import ru.practicum.dto.event.*;
 import ru.practicum.enums.EventState;
 import ru.practicum.exception.FeignClientUnavailableException;

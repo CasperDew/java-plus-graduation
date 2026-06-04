@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.ViewStatsDto;
 import ru.practicum.feing.StatsClient;
 import ru.practicum.mapper.EventMapper;
+import ru.practicum.mapper.LocationMapper;
 import ru.practicum.model.Event;
 import ru.practicum.repository.EventRepository;
 import ru.practicum.client.internal.CategoryClientInternal;
@@ -52,6 +53,7 @@ public class EventUtils {
     private final RequestClientInternal requestClient;
     private final CommentClientInternal commentClient;
     private final StatsClient statsClient;
+    private final LocationMapper locationMapper;
 
     public Map<Long, Long> getEventIdToViewsCountMap(Set<Event> events) {
         List<String> uri = new ArrayList<>();
@@ -307,6 +309,13 @@ public class EventUtils {
                 }
                 event.setState(EventState.CANCELED);
             }
+        }
+        if (request.getCategory() != null) {
+            event.setCategoryId(request.getCategory());
+        }
+
+        if (request.getLocation() != null) {
+            event.setLocation(locationMapper.mapLocationToEventLocation(request.getLocation()));
         }
     }
 

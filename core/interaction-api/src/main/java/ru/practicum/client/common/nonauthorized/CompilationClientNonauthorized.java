@@ -1,11 +1,11 @@
-package ru.practicum.common.nonauthorized;
+package ru.practicum.client.common.nonauthorized;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.practicum.client.common.fallback.CompilationClientFallback;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.CompilationClientFallback;
 import ru.practicum.dto.compilation.CompilationDto;
 
 import java.util.List;

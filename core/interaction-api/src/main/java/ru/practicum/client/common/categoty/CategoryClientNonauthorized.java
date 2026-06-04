@@ -1,11 +1,11 @@
-package ru.practicum.common.categoty;
+package ru.practicum.client.common.categoty;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.CategoryFallback;
+import ru.practicum.client.common.fallback.CategoryFallback;
 import ru.practicum.dto.category.CategoryDto;
 
 import java.util.List;

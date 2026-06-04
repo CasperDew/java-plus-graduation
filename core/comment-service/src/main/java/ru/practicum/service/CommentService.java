@@ -25,4 +25,6 @@ public interface CommentService {
 
     Map<Long, List<CommentDto>> getEventIdToCommentsDtoMap(Set<Long> eventIds);
 
+    boolean existsByAuthorIdInternal(Long authorId);
+
 }

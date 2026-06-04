@@ -162,7 +162,8 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
 
     private void checkRequesterIsEventInitiator(Long userId, EventInternalDto event) {
         if (!event.getInitiatorId().equals(userId)) {
-            throw new ConditionsConflictException("Пользователь с id " + userId + " не является инициатором события " + event.getId());
+            throw new ConditionsConflictException("Пользователь с id " + userId +
+                    " не является инициатором события " + event.getId());
         }
     }
 
@@ -186,6 +187,11 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
 
         if (event.getState() != EventState.PUBLISHED) {
             throw new ConditionsConflictException("Нельзя участвовать в неопубликованном событии");
+        }
+
+        if (requestRepository.existsByEventIdAndRequesterId(event.getId(), userId)) {
+            throw new ConditionsConflictException("Пользователь с id " + userId +
+                    " уже подавал заявку на участие в событии id " + event.getId());
         }
 
         int confirmedRequests = requestRepository.countByEventIdAndStatus(event.getId(), ParticipationRequestStatus.CONFIRMED);

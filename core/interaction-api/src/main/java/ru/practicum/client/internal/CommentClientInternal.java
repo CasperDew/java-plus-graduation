@@ -3,6 +3,7 @@ package ru.practicum.client.internal;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.practicum.client.config.FeignCustomConfig;
 import ru.practicum.client.internal.fallback.CommentClientFallbackInternal;
 import ru.practicum.dto.comment.CommentDto;
@@ -21,4 +22,7 @@ import java.util.Set;
 public interface CommentClientInternal {
     @GetMapping("/map")
     Map<Long, List<CommentDto>> getEventIdToCommentsDtoMap(@RequestBody Set<Long> eventIds);
+
+    @GetMapping("/exists")
+    boolean existsByAuthorIdInternal(@RequestParam Long authorId);
 }

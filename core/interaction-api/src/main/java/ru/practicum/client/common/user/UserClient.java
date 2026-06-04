@@ -1,11 +1,11 @@
-package ru.practicum.common.user;
+package ru.practicum.client.common.user;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.client.common.fallback.UserClientFallback;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.UserClientFallback;
 import ru.practicum.dto.user.NewUserRequest;
 import ru.practicum.dto.user.UserDto;
 

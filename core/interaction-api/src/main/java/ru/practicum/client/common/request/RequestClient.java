@@ -1,11 +1,11 @@
-package ru.practicum.common.request;
+package ru.practicum.client.common.request;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.client.common.fallback.ParticipationClientFallback;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.ParticipationClientFallback;
 import ru.practicum.dto.event.EventRequestStatusUpdateRequest;
 import ru.practicum.dto.event.EventRequestStatusUpdateResult;
 import ru.practicum.dto.participation.ParticipationRequestDto;

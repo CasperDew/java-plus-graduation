@@ -1,8 +1,8 @@
-package ru.practicum.common.fallback;
+package ru.practicum.client.common.fallback;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.common.user.UserClient;
+import ru.practicum.client.common.user.UserClient;
 import ru.practicum.dto.user.NewUserRequest;
 import ru.practicum.dto.user.UserDto;
 import ru.practicum.exception.FeignClientUnavailableException;

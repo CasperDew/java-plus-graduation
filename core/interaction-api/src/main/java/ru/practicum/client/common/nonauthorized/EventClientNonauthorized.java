@@ -1,4 +1,4 @@
-package ru.practicum.common.nonauthorized;
+package ru.practicum.client.common.nonauthorized;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.practicum.client.common.fallback.EventClientFallback;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.EventClientFallback;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.EventShortDto;
 

@@ -60,8 +60,8 @@ public class EventServiceImpl implements EventService {
     public EventFullDto updateByAdmin(Long eventId, UpdateEventAdminRequest request) {
         Event event = helper.getEvent(eventId);
         helper.updateEventFieldsFromAdminRequest(request, event);
-        Event eventSave = eventRepository.save(event);
-        EventFullDto dto = helper.getEventFullDto(eventSave);
+
+        EventFullDto dto = helper.getEventFullDto(event);
 
         log.info("Администратор: Обновление события {}", dto);
         return dto;

@@ -8,7 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.NewEndpointHitDto;
-import ru.practicum.common.nonauthorized.EventClientNonauthorized;
+import ru.practicum.client.common.nonauthorized.EventClientNonauthorized;
 import ru.practicum.feing.StatsClient;
 import ru.practicum.service.EventService;
 import ru.practicum.dto.event.EventFullDto;

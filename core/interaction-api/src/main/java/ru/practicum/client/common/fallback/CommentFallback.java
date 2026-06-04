@@ -1,9 +1,9 @@
-package ru.practicum.common.fallback;
+package ru.practicum.client.common.fallback;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.common.comment.CommentClientAdmin;
-import ru.practicum.common.comment.CommentClientAuthorized;
+import ru.practicum.client.common.comment.CommentClientAdmin;
+import ru.practicum.client.common.comment.CommentClientAuthorized;
 import ru.practicum.dto.comment.*;
 import ru.practicum.exception.FeignClientUnavailableException;
 

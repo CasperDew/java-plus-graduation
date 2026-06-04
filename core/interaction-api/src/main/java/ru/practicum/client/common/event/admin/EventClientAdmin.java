@@ -1,12 +1,12 @@
-package ru.practicum.common.event.admin;
+package ru.practicum.client.common.event.admin;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.client.common.fallback.EventClientFallback;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.EventClientFallback;
 import ru.practicum.dto.event.EventFullDto;
 import ru.practicum.dto.event.UpdateEventAdminRequest;
 import ru.practicum.enums.EventState;

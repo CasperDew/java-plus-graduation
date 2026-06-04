@@ -1,11 +1,11 @@
-package ru.practicum.common.comment;
+package ru.practicum.client.common.comment;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.client.common.fallback.CommentFallback;
 import ru.practicum.client.config.FeignCustomConfig;
-import ru.practicum.common.fallback.CommentFallback;
 import ru.practicum.dto.comment.CommentDto;
 import ru.practicum.dto.comment.NewCommentDto;
 

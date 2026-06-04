@@ -15,4 +15,9 @@ public class CommentClientFallbackInternal implements CommentClientInternal {
     public Map<Long, List<CommentDto>> getEventIdToCommentsDtoMap(Set<Long> eventIds) {
         throw new FeignClientUnavailableException("Сервис временно недоступен");
     }
+
+    @Override
+    public boolean existsByAuthorIdInternal(Long authorId) {
+        throw new FeignClientUnavailableException("Сервис временно недоступен");
+    }
 }

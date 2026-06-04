@@ -1,9 +1,9 @@
-package ru.practicum.common.fallback;
+package ru.practicum.client.common.fallback;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.practicum.common.event.admin.CompilationClientAdmin;
-import ru.practicum.common.nonauthorized.CompilationClientNonauthorized;
+import ru.practicum.client.common.event.admin.CompilationClientAdmin;
+import ru.practicum.client.common.nonauthorized.CompilationClientNonauthorized;
 import ru.practicum.dto.compilation.CompilationDto;
 import ru.practicum.dto.compilation.NewCompilationDto;
 import ru.practicum.dto.compilation.UpdateCompilationRequest;

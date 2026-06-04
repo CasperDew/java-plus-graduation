@@ -38,8 +38,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentDto createComment(Long userId, Long eventId, NewCommentDto commentDto) {
         UserShortDto user = userClient.getUserShortInfoById(userId);
-
-        Comment comment = commentRepository.save(commentMapper.mapToComment(commentDto, userId, eventId));
+        Comment comment = commentRepository.save(commentMapper.mapToComment(commentDto, user.getId(), eventId));
         return commentMapper.mapToCommentDto(comment, user.getName());
     }
 
@@ -125,6 +124,11 @@ public class CommentServiceImpl implements CommentService {
                     .add(commentMapper.mapToCommentDto(comment, userNames.get(comment.getAuthorId())));
         });
         return commentsMap;
+    }
+
+    @Override
+    public boolean existsByAuthorIdInternal(Long authorId) {
+        return commentRepository.existsByAuthorId(authorId);
     }
 
     private void checkUserIsCommentAuthor(Long userId, Comment comment) {

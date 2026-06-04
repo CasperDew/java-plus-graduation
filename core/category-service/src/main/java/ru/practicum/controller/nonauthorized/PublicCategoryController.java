@@ -3,7 +3,7 @@ package ru.practicum.controller.nonauthorized;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.common.categoty.CategoryClientNonauthorized;
+import ru.practicum.client.common.categoty.CategoryClientNonauthorized;
 import ru.practicum.service.CategoryService;
 import ru.practicum.dto.category.CategoryDto;
 
@@ -25,7 +25,7 @@ public class PublicCategoryController implements CategoryClientNonauthorized {
 
     @GetMapping("/{catId}")
     public CategoryDto getCategory(@PathVariable Long catId) {
-        log.info("Получение категории по id, catId={}", catId);
+        log.info("Получение категории Неавторизованным пользователем по id, catId={}", catId);
         return categoryService.getCategory(catId);
     }
 }
