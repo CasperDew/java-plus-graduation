@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/compilations/")
+@RequestMapping(path = "/compilations")
 public class PublicCompilationsController implements CompilationClientNonauthorized {
     private final CompilationService service;
 

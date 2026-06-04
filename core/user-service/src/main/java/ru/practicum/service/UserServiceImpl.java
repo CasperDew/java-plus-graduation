@@ -91,13 +91,13 @@ public class UserServiceImpl implements UserService {
             throw new ConditionsConflictException("Невозможно удалить пользователя id=" + userId +
                     ", т.к. есть связанное событие id=" + event.getId());
         }
-
-        if (commentClient.existsByAuthorIdInternal(userId)) {
+        boolean isComments = commentClient.existsByAuthorIdInternal(userId);
+        if (isComments) {
             throw new ConditionsConflictException("Невозможно удалить пользователя id=" + userId +
                     ", т.к. есть связанные комментарии");
         }
-
-        if (requestClient.existsByRequesterIdInternal(userId)) {
+        boolean isRequests = requestClient.existsByRequesterIdInternal(userId);
+        if (isRequests) {
             throw new ConditionsConflictException("Невозможно удалить пользователя id=" + userId +
                     ", т.к. есть связанные запросы на участие");
         }

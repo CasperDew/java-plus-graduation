@@ -130,5 +130,4 @@ public class EventServiceImpl implements EventService {
                 .orElse(null);
     }
 
-
 }

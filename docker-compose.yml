@@ -101,93 +101,93 @@ services:
       interval: 5s
       retries: 10
 
-  discovery-server:
-    build: ./infra/discovery-server
-    container_name: discovery-server
-    ports:
-      - "8761:8761"
-
-  config-server:
-    build: ./infra/config-server
-    container_name: config-server
-    depends_on:
-      - discovery-server
-    environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-
-  gateway-server:
-    build: ./infra/gateway-server
-    container_name: gateway-server
-    ports:
-      - "8080:8080"
-    depends_on:
-      - discovery-server
-      - config-server
-    environment:
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-
-  user-service:
-    build: ./core/user-service
-    depends_on:
-      - discovery-server
-      - config-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://user-service-db:5432/user
-      - SPRING_DATASOURCE_USERNAME=main
-      - SPRING_DATASOURCE_PASSWORD=main
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-
-  event-service:
-    build: ./core/event-service
-    depends_on:
-      - discovery-server
-      - config-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://event-service-db:5432/event
-      - SPRING_DATASOURCE_USERNAME=main
-      - SPRING_DATASOURCE_PASSWORD=main
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-
-  request-service:
-    build: ./core/request-service
-    depends_on:
-      - discovery-server
-      - config-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://request-service-db:5432/request
-      - SPRING_DATASOURCE_USERNAME=main
-      - SPRING_DATASOURCE_PASSWORD=main
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-
-  comment-service:
-    build: ./core/comment-service
-    depends_on:
-      - discovery-server
-      - config-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://comment-service-db:5432/comment
-      - SPRING_DATASOURCE_USERNAME=main
-      - SPRING_DATASOURCE_PASSWORD=main
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-
-  category-service:
-    build: ./core/category-service
-    depends_on:
-      - discovery-server
-      - config-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://category-service-db:5432/category
-      - SPRING_DATASOURCE_USERNAME=main
-      - SPRING_DATASOURCE_PASSWORD=main
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
-
-  stats-server:
-    build: ./stats/stats-server
-    depends_on:
-      - discovery-server
-      - config-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statistics
-      - SPRING_DATASOURCE_USERNAME=stat
-      - SPRING_DATASOURCE_PASSWORD=stat
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#  discovery-server:
+#    build: ./infra/discovery-server
+#    container_name: discovery-server
+#    ports:
+#      - "8761:8761"
+#
+#  config-server:
+#    build: ./infra/config-server
+#    container_name: config-server
+#    depends_on:
+#      - discovery-server
+#    environment:
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#
+#  gateway-server:
+#    build: ./infra/gateway-server
+#    container_name: gateway-server
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - discovery-server
+#      - config-server
+#    environment:
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#
+#  user-service:
+#    build: ./core/user-service
+#    depends_on:
+#      - discovery-server
+#      - config-server
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://user-service-db:5432/user
+#      - SPRING_DATASOURCE_USERNAME=main
+#      - SPRING_DATASOURCE_PASSWORD=main
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#
+#  event-service:
+#    build: ./core/event-service
+#    depends_on:
+#      - discovery-server
+#      - config-server
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://event-service-db:5432/event
+#      - SPRING_DATASOURCE_USERNAME=main
+#      - SPRING_DATASOURCE_PASSWORD=main
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#
+#  request-service:
+#    build: ./core/request-service
+#    depends_on:
+#      - discovery-server
+#      - config-server
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://request-service-db:5432/request
+#      - SPRING_DATASOURCE_USERNAME=main
+#      - SPRING_DATASOURCE_PASSWORD=main
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#
+#  comment-service:
+#    build: ./core/comment-service
+#    depends_on:
+#      - discovery-server
+#      - config-server
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://comment-service-db:5432/comment
+#      - SPRING_DATASOURCE_USERNAME=main
+#      - SPRING_DATASOURCE_PASSWORD=main
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#
+#  category-service:
+#    build: ./core/category-service
+#    depends_on:
+#      - discovery-server
+#      - config-server
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://category-service-db:5432/category
+#      - SPRING_DATASOURCE_USERNAME=main
+#      - SPRING_DATASOURCE_PASSWORD=main
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+#
+#  stats-server:
+#    build: ./stats/stats-server
+#    depends_on:
+#      - discovery-server
+#      - config-server
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statistics
+#      - SPRING_DATASOURCE_USERNAME=stat
+#      - SPRING_DATASOURCE_PASSWORD=stat
+#      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/

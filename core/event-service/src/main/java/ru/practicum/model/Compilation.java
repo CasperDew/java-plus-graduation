@@ -10,7 +10,6 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
 @Table(name = "compilations")
 public class Compilation {
     @Id

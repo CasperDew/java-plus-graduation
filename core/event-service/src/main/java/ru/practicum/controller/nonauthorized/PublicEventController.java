@@ -24,7 +24,7 @@ import static ru.practicum.service.EventServiceImpl.DATE_TIME_FORMATTER;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/events/")
+@RequestMapping(path = "/events")
 public class PublicEventController implements EventClientNonauthorized {
     private static final String APP_NAME = "main-service";
     private final EventService eventService;
