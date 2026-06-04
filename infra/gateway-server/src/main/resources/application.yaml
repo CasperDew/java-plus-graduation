@@ -12,7 +12,7 @@ spring:
         max-attempts: 30
       discovery:
         enabled: true
-        service-id: config-server
+        serviceId: config-server
       uri: ""
     gateway:
       discovery:

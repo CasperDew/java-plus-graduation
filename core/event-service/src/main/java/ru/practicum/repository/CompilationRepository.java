@@ -10,11 +10,11 @@ import ru.practicum.model.Compilation;
 import java.util.List;
 
 public interface CompilationRepository extends JpaRepository<Compilation, Long> {
-    @EntityGraph(attributePaths = {"events.category", "events.initiator", "events.location"})
+    @EntityGraph(attributePaths = {"events.location"})
     List<Compilation> findAllByPinned(Boolean pinned, Pageable pageable);
 
 
-    @EntityGraph(attributePaths = {"events.category", "events.initiator", "events.location"})
+    @EntityGraph(attributePaths = {"events.location"})
     @Query("select c from Compilation c")
     List<Compilation> getCompilationList(Pageable pageable);
 }
