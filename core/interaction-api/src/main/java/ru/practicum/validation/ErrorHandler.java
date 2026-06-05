@@ -54,9 +54,7 @@ public class ErrorHandler {
         log.debug(e.getMessage());
         String req = request.getMethod() + " " + request.getRequestURI() + (request.getQueryString() == null ? "" : "?" + request.getQueryString());
         String description = "";
-        if (e.getMessage().contains("unique_user_event_request")) {
-            description = ". Запрос на данное событие от пользователя уже существует";
-        } else if (e.getMessage().contains("categories_name_unique")) {
+        if (e.getMessage().contains("categories_name_unique")) {
             description = ". Категория с таким названием уже существует";
         }
 
