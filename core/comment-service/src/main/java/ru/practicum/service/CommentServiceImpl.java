@@ -51,8 +51,8 @@ public class CommentServiceImpl implements CommentService {
         comment.setText(commentDto.getText());
         comment.setStatus(CommentStatus.PENDING);
         UserShortDto user = userClient.getUserShortInfoById(userId);
-
-        return commentMapper.mapToCommentDto(commentRepository.save(comment), user.getName());
+        comment = commentRepository.save(comment);
+        return commentMapper.mapToCommentDto(comment, user.getName());
     }
 
     @Override

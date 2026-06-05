@@ -1,7 +1,10 @@
 package ru.practicum.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.practicum.enums.ParticipationRequestStatus;
 
 import java.time.LocalDateTime;
@@ -12,7 +15,6 @@ import java.time.temporal.ChronoUnit;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id"})
 @Table(name = "participation_requests")
 public class ParticipationRequest {
     @Id

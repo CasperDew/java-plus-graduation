@@ -19,6 +19,7 @@ import java.util.Set;
 public class InternalCommentController implements CommentClientInternal {
     private final CommentService commentService;
 
+    @Override
     @GetMapping("/map")
     public Map<Long, List<CommentDto>> getEventIdToCommentsDtoMap(@RequestBody Set<Long> eventIds) {
         log.info("Получен запрос на формирование словаря комментариев по событиям" + eventIds);

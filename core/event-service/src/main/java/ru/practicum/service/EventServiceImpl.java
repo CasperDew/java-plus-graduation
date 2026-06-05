@@ -105,7 +105,7 @@ public class EventServiceImpl implements EventService {
         Set<Event> events = searchCriteriaOpt.map(predicate -> eventRepository.findAll(predicate, page).toSet())
                 .orElseGet(() -> eventRepository.findAll(page).toSet());
 
-        return helper.getEventFullDtoList(events, false);
+        return helper.getEventFullDtoList(events);
     }
 
     @Override

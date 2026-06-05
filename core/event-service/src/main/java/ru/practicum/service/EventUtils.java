@@ -175,7 +175,7 @@ public class EventUtils {
                 .toList();
     }
 
-    public List<EventFullDto> getEventFullDtoList(Set<Event> events, boolean available) {
+    public List<EventFullDto> getEventFullDtoList(Set<Event> events) {
         if (events.isEmpty()) {
             return Collections.emptyList();
         }

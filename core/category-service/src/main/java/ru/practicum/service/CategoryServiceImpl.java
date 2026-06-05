@@ -75,7 +75,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Map<Long, CategoryDto> getCategoryIdToCategoryDtoMap(@RequestBody Set<Long> categoryIds) {
-        List<Category> categories = categoryRepository.findAllByIdIn( categoryIds);
+        List<Category> categories = categoryRepository.findAllByIdIn(categoryIds);
         return categories.stream()
                 .collect(Collectors.toMap(Category::getId, mapper::mapCategoryToCategoryDto));
     }

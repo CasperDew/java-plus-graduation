@@ -9,9 +9,7 @@ import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.exception.ConditionsConflictException;
-import ru.practicum.exception.NotFoundException;
-import ru.practicum.exception.ValidationException;
+import ru.practicum.exception.*;
 
 import java.util.List;
 
@@ -67,11 +65,18 @@ public class ErrorHandler {
                 HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(ValidationException.class)
+    @ExceptionHandler({ValidationException.class, ConditionsNotMetException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleConditionsConflict(final ValidationException e) {
         log.debug(e.getMessage());
         return new ApiError(e.getMessage(), "Нарушение условий выполнения запроса", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(FeignClientUnavailableException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiError handleFeignClientException(final FeignClientUnavailableException e) {
+        log.debug(e.getMessage());
+        return new ApiError(e.getMessage(), "Сервис временно недоступен", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

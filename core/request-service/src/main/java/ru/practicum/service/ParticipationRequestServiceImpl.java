@@ -172,7 +172,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
 
         validateRequest(event, user.getId());
         ParticipationRequest request = new ParticipationRequest();
-        request.setRequesterId(userId);
+        request.setRequesterId(user.getId());
         request.setEventId(event.getId());
 
         return request;
@@ -189,7 +189,8 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
             throw new ConditionsConflictException("Нельзя участвовать в неопубликованном событии");
         }
 
-        if (requestRepository.existsByEventIdAndRequesterId(event.getId(), userId)) {
+        boolean isRequestForSameEvent = requestRepository.existsByEventIdAndRequesterId(event.getId(), userId);
+        if (isRequestForSameEvent) {
             throw new ConditionsConflictException("Пользователь с id " + userId +
                     " уже подавал заявку на участие в событии id " + event.getId());
         }
