@@ -8,15 +8,34 @@ spring:
       fail-fast: true
       retry:
         useRandomPolicy: true
-        max-interval: 6000
+        max-interval: 20000
+        max-attempts: 30
       discovery:
         enabled: true
-        service-id: config-server
+        serviceId: config-server
+      uri: ""
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+    loadbalancer:
+      cache:
+        ttl: 2s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
 
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+      registry-fetch-interval-seconds: 3
   instance:
     preferIpAddress: true
     hostname: localhost
