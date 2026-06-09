@@ -1,10 +1,7 @@
 package ru.practicum.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.practicum.enums.EventState;
 
 import java.time.LocalDateTime;
@@ -53,6 +50,9 @@ public class Event {
 
     @Column(name = "title", length = 120)
     private String title;
+
+    @Column(name = "rating", nullable = false)
+    private Double rating = 0.0;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "location_id", nullable = false)
