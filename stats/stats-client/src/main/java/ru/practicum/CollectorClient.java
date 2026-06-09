@@ -14,7 +14,7 @@ public class CollectorClient {
     @GrpcClient("collector")
     private UserActionControllerGrpc.UserActionControllerBlockingStub collectorStub;
 
-    public void sendUserAction(UserActionProto action) {
+    public void sendUserAction(long userId, long eventId, UserActionProto action) {
         try {
             collectorStub.collectUserAction(action);
             log.debug("Действие отправлено: userId={}, eventId={}",

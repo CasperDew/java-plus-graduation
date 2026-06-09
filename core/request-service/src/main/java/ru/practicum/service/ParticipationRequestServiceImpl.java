@@ -233,7 +233,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
                             .build())
                     .build();
 
-            collectorClient.sendUserAction(action);
+            collectorClient.sendUserAction(userId, eventId, action);
             log.debug("Отправлена регистрация в Collector: userId={}, eventId={}", userId, eventId);
         } catch (Exception e) {
             log.error("Ошибка отправки регистрации в Collector: {}", e.getMessage(), e);
