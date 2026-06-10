@@ -105,7 +105,6 @@ public class EventServiceImpl implements EventService {
                         .setNanos(Instant.now().getNano())
                         .build())
                 .build();
-
         collectorClient.sendUserAction(userId, eventId, action);
 
         EventFullDto dto = helper.getEventFullDto(event);
