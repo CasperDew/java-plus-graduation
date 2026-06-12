@@ -13,8 +13,8 @@ spring:
             - classpath:config/core/request-service/
             - classpath:config/core/event-service/
             - classpath:config/core/user-service/
-            - classpath:config/stats-server/
             - classpath:config/gateway-server/
+            - classpath:/config/stats/{application}
         fail-fast: true
         retry:
           useRandomPolicy: true

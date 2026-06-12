@@ -1,8 +1,10 @@
 package ru.practicum.service;
 
 import ru.practicum.dto.event.*;
+import ru.practicum.ewm.stats.proto.RecommendedEventProto;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface EventService {
 
@@ -14,7 +16,7 @@ public interface EventService {
 
     EventFullDto getByUser(Long userId, Long eventId);
 
-    EventFullDto getPublicEvent(Long eventId);
+    EventFullDto getPublicEvent(Long eventId, String ip, Long userId);
 
     List<EventShortDto> getAllByUser(Long userId, Integer from, Integer size);
 
@@ -25,4 +27,8 @@ public interface EventService {
     EventInternalDto getEventByIdInternal(Long eventId);
 
     EventInternalDto getExistingEventInternal(Long categoryId, Long initiatorId);
+
+    Stream<RecommendedEventProto> getRecommendationsForUser(Long userId, int maxResults);
+
+    void likeEvent(Long userId, Long eventId);
 }
